@@ -47,7 +47,12 @@ public class BidListController {
     }
 
     @PostMapping("/bidList/validate")
-    public String validate(Model model, @Valid BidList bid, BindingResult result) throws SQLException {
+    public String validate(
+            Model model,
+            @Valid BidList bid,
+            BindingResult result,
+            RedirectAttributes redirectAttributes) throws SQLException
+    {
         // TODO: check data valid and save to db, after saving return bid list
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> LOGGER.error("{} - {}", LOG_ID, error));
@@ -56,6 +61,7 @@ public class BidListController {
 
         BidList savedBid = bidListService.save(bid);
         model.addAttribute("bidList", savedBid);
+        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_BID_ADDED);
 
         return "redirect:/bidList/list";
     }
@@ -70,8 +76,13 @@ public class BidListController {
     }
 
     @PostMapping("/bidList/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,
-                             BindingResult result, Model model) {
+    public String updateBid(
+            @PathVariable("id") Integer id,
+            @Valid BidList bidList,
+            BindingResult result,
+            Model model,
+            RedirectAttributes redirectAttributes)
+    {
         // TODO: check required fields, if valid call service to update Bid and return list Bid
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> LOGGER.error("{} - {}", LOG_ID, error));
@@ -80,6 +91,7 @@ public class BidListController {
 
         BidList updatedBid = bidListService.update(bidList);
         model.addAttribute("bidList", updatedBid);
+        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_BID_UPDATED);
 
         return "redirect:/bidList/list";
     }
