@@ -1,0 +1,17 @@
+<!--    ALERTS     -->
+<div class="row">
+    <div class="alert alert-success alert-dismissible fade show mt-2" role="alert" th:if="${success}" th:text="${success}" style="width: 100%">
+        Success Alert
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert" th:if="${failure}" th:text="${failure}" style="width: 100%">
+        Warning Alert
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" th:if="${exceptionMessage}" th:text="${exceptionMessage}" style="width: 100%">
+        Alert Exception Message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>

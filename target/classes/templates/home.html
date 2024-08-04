@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title> Spring Boot </title>
-    <link rel="stylesheet" href="/css/styles.css"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" >
+    <link rel="stylesheet" th:href="@{css/styles.css}"/>
 </head>
 <body>
-<h3> HOME PAGE </h3>
-<ul>
-    <li>
-        <a href="/login">Login</a>
-    </li>
-    <li>
-        <a href="/user/list">User management</a>
-    </li>
-    <li>
-        <a href="/bidList/list">Bid List</a>
-    </li>
-</ul>
+    <div class="container">
+        <h3> HOME PAGE </h3>
 
+        <ul class="nav flex-column">
+        <!--    aria-current="page"-->
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user/list">User management</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/bidList/list">Bid List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/curvePoint/list">CurvePoint List</a>
+            </li>
+        </ul>
+    </div>
 </body>
 </html>

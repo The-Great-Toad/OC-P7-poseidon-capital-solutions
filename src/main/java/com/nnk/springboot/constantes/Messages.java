@@ -6,4 +6,12 @@ public class Messages {
     public static final String SUCCESS_BID_ADDED = "Bid added to your list";
     public static final String SUCCESS_BID_DELETED = "Bid removed from your list";
     public static final String SUCCESS_BID_UPDATED = "Bid successfully updated";
+
+    public static final String SUCCESS_CURVEPOINT_ADDED = "Curve point added to your list";
+    public static final String SUCCESS_CURVEPOINT_DELETED = "Curve point removed from your list";
+    public static final String SUCCESS_CURVEPOINT_UPDATED = "Curve point successfully updated";
+
+    /* FAILURE */
+    public static final String FAILURE_BID_DELETE = "Failed to remove Bid from your list. Please retry later or contact us if problem persist";
+    public static final String FAILURE_CURVEPOINT_DELETE = "Failed to remove curve point from your list. Please retry later or contact us if problem persist";
 }

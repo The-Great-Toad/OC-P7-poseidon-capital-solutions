@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+      <title>Spring Boot</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-6">
+            <a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
+            <a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
+            <a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
+            <a href="/trade/list">Trade</a>&nbsp;|&nbsp;
+            <a href="/ruleName/list">Rule</a>
+        </div>
+        <div class="col-6 text-right">
+            <form th:action="@{/app-logout}" method="POST">
+                <input type="submit" value="Logout"/>
+            </form>
+        </div>
+    </div>
+
+   <h3>There was an unexpected error</h3>
+
+    <p class="error">Error type <strong th:text="${errorType}"></strong></p>
+    <p class="error">Error type <strong th:text="${errorMsg}"></strong></p>
+</body>
+</html>   
