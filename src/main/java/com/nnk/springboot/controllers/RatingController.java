@@ -1,7 +1,11 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.constantes.Messages;
 import com.nnk.springboot.domain.Rating;
+import com.nnk.springboot.services.rating.RatingService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,15 +13,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class RatingController {
-    // TODO: Inject Rating service
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RatingController.class);
+    private static final String LOG_ID = "[RatingController]";
+
+    private final RatingService ratingService;
+
+    public RatingController(RatingService ratingService) {
+        this.ratingService = ratingService;
+    }
 
     @RequestMapping("/rating/list")
     public String home(Model model)
     {
-        // TODO: find all Rating, add to model
+        model.addAttribute("ratings", ratingService.getRatings());
         return "rating/list";
     }
 
@@ -27,27 +40,68 @@ public class RatingController {
     }
 
     @PostMapping("/rating/validate")
-    public String validate(@Valid Rating rating, BindingResult result, Model model) {
+    public String validate(
+            Model model,
+            @Valid Rating rating,
+            BindingResult result,
+            RedirectAttributes redirectAttributes)
+    {
         // TODO: check data valid and save to db, after saving return Rating list
-        return "rating/add";
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach(error -> LOGGER.error("{} - {}", LOG_ID, error));
+            return "rating/add";
+        }
+
+        ratingService.save(rating);
+        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_RATING_ADDED);
+
+        return "redirect:/rating/list";
     }
 
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         // TODO: get Rating by Id and to model then show to the form
+        model.addAttribute("rating", ratingService.getRating(id));
         return "rating/update";
     }
 
     @PostMapping("/rating/update/{id}")
-    public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
-                             BindingResult result, Model model) {
+    public String updateRating(
+            @PathVariable("id") Integer id,
+            Model model,
+            @Valid Rating rating,
+            BindingResult result,
+            RedirectAttributes redirectAttributes)
+    {
         // TODO: check required fields, if valid call service to update Rating and return Rating list
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach(error -> LOGGER.error("{} - {}", LOG_ID, error));
+            return "rating/update";
+        }
+
+        ratingService.update(rating);
+        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_RATING_UPDATED);
+
         return "redirect:/rating/list";
     }
 
     @GetMapping("/rating/delete/{id}")
-    public String deleteRating(@PathVariable("id") Integer id, Model model) {
+    public String deleteRating(
+            @PathVariable("id") Integer id,
+            Model model,
+            RedirectAttributes redirectAttributes)
+    {
         // TODO: Find Rating by Id and delete the Rating, return to Rating list
+        Rating rating = ratingService.getRating(id);
+
+        if (rating != null) {
+            ratingService.delete(rating);
+            LOGGER.info("Deleted BidList: {}", rating);
+            redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_RATING_DELETED);
+        } else {
+            LOGGER.info("No BidList found with id: {}", id);
+            redirectAttributes.addFlashAttribute("failure", Messages.FAILURE_RATING_DELETE);
+        }
         return "redirect:/rating/list";
     }
 }
