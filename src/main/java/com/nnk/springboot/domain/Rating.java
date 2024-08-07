@@ -2,12 +2,14 @@ package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "rating")
 public class Rating {
@@ -16,12 +18,16 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer id;
+
     @Column
-    private String moodysRating;
+    private Integer moodysRating;
+
     @Column
-    private String sandPRating;
+    private Integer sandPRating;
+
     @Column
-    private String fitchRating;
+    private Integer fitchRating;
+
     @Column
     private Integer orderNumber;
 }
