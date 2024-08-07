@@ -2,7 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.constantes.Messages;
 import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.services.BidListService;
+import com.nnk.springboot.services.bidList.BidListService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.SQLException;
-import java.util.List;
 
 @Controller
 public class BidListController {
@@ -33,10 +32,7 @@ public class BidListController {
     @RequestMapping("/bidList/list")
     public String home(Model model)
     {
-        // TODO: call service find all bids to show to the view
-        List<BidList> bids = bidListService.getBids();
-        model.addAttribute("bidLists", bids);
-
+        model.addAttribute("bidLists", bidListService.getBids());
         return "bidList/list";
     }
 
@@ -53,14 +49,12 @@ public class BidListController {
             BindingResult result,
             RedirectAttributes redirectAttributes) throws SQLException
     {
-        // TODO: check data valid and save to db, after saving return bid list
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> LOGGER.error("{} - {}", LOG_ID, error));
             return "bidList/add";
         }
 
-        BidList savedBid = bidListService.save(bid);
-        model.addAttribute("bidList", savedBid);
+        bidListService.save(bid);
         redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_BID_ADDED);
 
         return "redirect:/bidList/list";
@@ -68,10 +62,7 @@ public class BidListController {
 
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Bid by Id and to model then show to the form
-        BidList bid = bidListService.getBid(id);
-        model.addAttribute("bidList", bid);
-
+        model.addAttribute("bidList", bidListService.getBid(id));
         return "bidList/update";
     }
 
@@ -83,32 +74,34 @@ public class BidListController {
             Model model,
             RedirectAttributes redirectAttributes)
     {
-        // TODO: check required fields, if valid call service to update Bid and return list Bid
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> LOGGER.error("{} - {}", LOG_ID, error));
             return "bidList/update";
         }
 
-        BidList updatedBid = bidListService.update(bidList);
-        model.addAttribute("bidList", updatedBid);
+        bidListService.update(bidList);
         redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_BID_UPDATED);
 
         return "redirect:/bidList/list";
     }
 
     @GetMapping("/bidList/delete/{id}")
-    public String deleteBid(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-        // TODO: Find Bid by Id and delete the bid, return to Bid list
+    public String deleteBid(
+            @PathVariable("id") Integer id,
+            Model model,
+            RedirectAttributes redirectAttributes)
+    {
         BidList bid = bidListService.getBid(id);
 
         if (bid != null) {
             bidListService.delete(bid);
             LOGGER.info("Deleted BidList: {}", bid);
+            redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_BID_DELETED);
         } else {
             LOGGER.info("No BidList found with id: {}", id);
+            redirectAttributes.addFlashAttribute("failure", Messages.FAILURE_BID_DELETE);
         }
 
-        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_BID_DELETED);
         return "redirect:/bidList/list";
     }
 }
