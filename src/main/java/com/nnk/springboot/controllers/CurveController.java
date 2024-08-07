@@ -52,7 +52,7 @@ public class CurveController {
             return "curvePoint/add";
         }
 
-        model.addAttribute("curvePoint", curvePointService.save(curvePoint));
+        curvePointService.save(curvePoint);
         redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_CURVEPOINT_ADDED);
 
         return "redirect:/curvePoint/list";
@@ -76,10 +76,10 @@ public class CurveController {
         // TODO: check required fields, if valid call service to update Curve and return Curve list
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> LOGGER.error("{} - {}", LOG_ID, error));
-            return "bidList/update";
+            return "curvePoint/update";
         }
 
-        model.addAttribute("curvePoint", curvePointService.update(curvePoint));
+        curvePointService.update(curvePoint);
         redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_CURVEPOINT_UPDATED);
 
         return "redirect:/curvePoint/list";

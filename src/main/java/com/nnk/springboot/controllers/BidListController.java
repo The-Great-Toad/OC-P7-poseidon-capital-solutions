@@ -54,7 +54,7 @@ public class BidListController {
             return "bidList/add";
         }
 
-        model.addAttribute("bidList", bidListService.save(bid));
+        bidListService.save(bid);
         redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_BID_ADDED);
 
         return "redirect:/bidList/list";
@@ -79,7 +79,7 @@ public class BidListController {
             return "bidList/update";
         }
 
-        model.addAttribute("bidList", bidListService.update(bidList));
+        bidListService.update(bidList);
         redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_BID_UPDATED);
 
         return "redirect:/bidList/list";
