@@ -52,7 +52,7 @@ public class RuleNameController {
         }
 
         ruleNameService.save(ruleName);
-        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_RULENAME_ADDED);
+        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_ADDED.formatted("rule"));
 
         return "redirect:/ruleName/list";
     }
@@ -77,7 +77,7 @@ public class RuleNameController {
         }
 
         ruleNameService.update(ruleName);
-        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_RULENAME_UPDATED);
+        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_UPDATED.formatted("rule"));
 
         return "redirect:/ruleName/list";
     }
@@ -93,10 +93,10 @@ public class RuleNameController {
         if (ruleName != null) {
             ruleNameService.delete(ruleName);
             LOGGER.info("Deleted ruleName: {}", ruleName);
-            redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_RULENAME_DELETED);
+            redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_DELETED.formatted("rule"));
         } else {
             LOGGER.info("No ruleName found with id: {}", id);
-            redirectAttributes.addFlashAttribute("failure", Messages.FAILURE_RULENAME_DELETE);
+            redirectAttributes.addFlashAttribute("failure", Messages.FAILURE_DELETE.formatted("rule"));
         }
 
         return "redirect:/ruleName/list";

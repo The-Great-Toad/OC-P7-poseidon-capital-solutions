@@ -35,7 +35,7 @@ public class CurveController {
     }
 
     @GetMapping("/curvePoint/add")
-    public String addBidForm(CurvePoint bid) {
+    public String addBidForm(CurvePoint curvePoint) {
         return "curvePoint/add";
     }
 
@@ -46,21 +46,19 @@ public class CurveController {
             BindingResult result,
             RedirectAttributes redirectAttributes)
     {
-        // TODO: check data valid and save to db, after saving return Curve list
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> LOGGER.error("{} - {}", LOG_ID, error));
             return "curvePoint/add";
         }
 
         curvePointService.save(curvePoint);
-        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_CURVEPOINT_ADDED);
+        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_ADDED.formatted("curve point"));
 
         return "redirect:/curvePoint/list";
     }
 
     @GetMapping("/curvePoint/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get CurvePoint by Id and to model then show to the form
         model.addAttribute("curvePoint", curvePointService.getCurvePoint(id));
         return "curvePoint/update";
     }
@@ -73,14 +71,13 @@ public class CurveController {
             BindingResult result,
             RedirectAttributes redirectAttributes)
     {
-        // TODO: check required fields, if valid call service to update Curve and return Curve list
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> LOGGER.error("{} - {}", LOG_ID, error));
             return "curvePoint/update";
         }
 
         curvePointService.update(curvePoint);
-        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_CURVEPOINT_UPDATED);
+        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_UPDATED.formatted("curve point"));
 
         return "redirect:/curvePoint/list";
     }
@@ -91,16 +88,15 @@ public class CurveController {
             Model model,
             RedirectAttributes redirectAttributes)
     {
-        // TODO: Find Curve by Id and delete the Curve, return to Curve list
         CurvePoint curvePoint = curvePointService.getCurvePoint(id);
 
         if (curvePoint != null) {
             curvePointService.delete(curvePoint);
-            LOGGER.info("Deleted BidList: {}", curvePoint);
-            redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_CURVEPOINT_DELETED);
+            LOGGER.info("Deleted curvePoint: {}", curvePoint);
+            redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_DELETED.formatted("curve point"));
         } else {
-            LOGGER.info("No BidList found with id: {}", id);
-            redirectAttributes.addFlashAttribute("failure", Messages.FAILURE_CURVEPOINT_DELETE);
+            LOGGER.info("No curvePoint found with id: {}", id);
+            redirectAttributes.addFlashAttribute("failure", Messages.FAILURE_DELETE.formatted("curve point"));
         }
         return "redirect:/curvePoint/list";
     }

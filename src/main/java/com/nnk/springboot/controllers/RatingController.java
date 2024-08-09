@@ -52,7 +52,7 @@ public class RatingController {
         }
 
         ratingService.save(rating);
-        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_RATING_ADDED);
+        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_ADDED.formatted("rating"));
 
         return "redirect:/rating/list";
     }
@@ -77,7 +77,7 @@ public class RatingController {
         }
 
         ratingService.update(rating);
-        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_RATING_UPDATED);
+        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_UPDATED.formatted("rating"));
 
         return "redirect:/rating/list";
     }
@@ -93,10 +93,10 @@ public class RatingController {
         if (rating != null) {
             ratingService.delete(rating);
             LOGGER.info("Deleted rating: {}", rating);
-            redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_RATING_DELETED);
+            redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_DELETED.formatted("rating"));
         } else {
             LOGGER.info("No rating found with id: {}", id);
-            redirectAttributes.addFlashAttribute("failure", Messages.FAILURE_RATING_DELETE);
+            redirectAttributes.addFlashAttribute("failure", Messages.FAILURE_DELETE.formatted("rating"));
         }
 
         return "redirect:/rating/list";
