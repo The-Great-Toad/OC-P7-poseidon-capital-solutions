@@ -15,8 +15,13 @@ public class Messages {
     public static final String SUCCESS_RATING_DELETED = "Rating removed from your list";
     public static final String SUCCESS_RATING_UPDATED = "Rating successfully updated";
 
+    public static final String SUCCESS_RULENAME_ADDED = "Rule added to your list";
+    public static final String SUCCESS_RULENAME_DELETED = "Rule removed from your list";
+    public static final String SUCCESS_RULENAME_UPDATED = "Rule successfully updated";
+
     /* FAILURE */
-    public static final String FAILURE_BID_DELETE = "Failed to remove Bid from your list. Please retry later or contact us if problem persist";
-    public static final String FAILURE_CURVEPOINT_DELETE = "Failed to remove curve point from your list. Please retry later or contact us if problem persist";
-    public static final String FAILURE_RATING_DELETE = "Failed to remove rating from your list. Please retry later or contact us if problem persist";
+    public static final String FAILURE_BID_DELETE = "Failed to remove bid from your list. Please retry later or contact us if the problem persist";
+    public static final String FAILURE_CURVEPOINT_DELETE = "Failed to remove curve point from your list. Please retry later or contact us if the problem persist";
+    public static final String FAILURE_RATING_DELETE = "Failed to remove rating from your list. Please retry later or contact us if the problem persist";
+    public static final String FAILURE_RULENAME_DELETE = "Failed to remove rule from your list. Please retry later or contact us if the problem persist";
 }
