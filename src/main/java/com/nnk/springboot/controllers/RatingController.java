@@ -46,7 +46,6 @@ public class RatingController {
             BindingResult result,
             RedirectAttributes redirectAttributes)
     {
-        // TODO: check data valid and save to db, after saving return Rating list
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> LOGGER.error("{} - {}", LOG_ID, error));
             return "rating/add";
@@ -60,7 +59,6 @@ public class RatingController {
 
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Rating by Id and to model then show to the form
         model.addAttribute("rating", ratingService.getRating(id));
         return "rating/update";
     }
@@ -73,7 +71,6 @@ public class RatingController {
             BindingResult result,
             RedirectAttributes redirectAttributes)
     {
-        // TODO: check required fields, if valid call service to update Rating and return Rating list
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> LOGGER.error("{} - {}", LOG_ID, error));
             return "rating/update";
@@ -91,17 +88,17 @@ public class RatingController {
             Model model,
             RedirectAttributes redirectAttributes)
     {
-        // TODO: Find Rating by Id and delete the Rating, return to Rating list
         Rating rating = ratingService.getRating(id);
 
         if (rating != null) {
             ratingService.delete(rating);
-            LOGGER.info("Deleted BidList: {}", rating);
+            LOGGER.info("Deleted rating: {}", rating);
             redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_RATING_DELETED);
         } else {
-            LOGGER.info("No BidList found with id: {}", id);
+            LOGGER.info("No rating found with id: {}", id);
             redirectAttributes.addFlashAttribute("failure", Messages.FAILURE_RATING_DELETE);
         }
+
         return "redirect:/rating/list";
     }
 }
