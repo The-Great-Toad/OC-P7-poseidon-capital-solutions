@@ -55,7 +55,7 @@ public class BidListController {
         }
 
         bidListService.save(bid);
-        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_BID_ADDED);
+        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_ADDED.formatted("bid"));
 
         return "redirect:/bidList/list";
     }
@@ -80,7 +80,7 @@ public class BidListController {
         }
 
         bidListService.update(bidList);
-        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_BID_UPDATED);
+        redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_UPDATED.formatted("bid"));
 
         return "redirect:/bidList/list";
     }
@@ -96,10 +96,10 @@ public class BidListController {
         if (bid != null) {
             bidListService.delete(bid);
             LOGGER.info("Deleted BidList: {}", bid);
-            redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_BID_DELETED);
+            redirectAttributes.addFlashAttribute("success", Messages.SUCCESS_DELETED.formatted("bid"));
         } else {
             LOGGER.info("No BidList found with id: {}", id);
-            redirectAttributes.addFlashAttribute("failure", Messages.FAILURE_BID_DELETE);
+            redirectAttributes.addFlashAttribute("failure", Messages.FAILURE_DELETE.formatted("bid"));
         }
 
         return "redirect:/bidList/list";

@@ -80,7 +80,7 @@ class BidListControllerTest {
                 .andExpect(redirectedUrl("/bidList/list"))
                 .andExpect(model().size(0))
                 .andExpect(flash().attributeExists("success"))
-                .andExpect(flash().attribute("success", Messages.SUCCESS_BID_ADDED))
+                .andExpect(flash().attribute("success", Messages.SUCCESS_ADDED.formatted("bid")))
                 .andExpect(view().name("redirect:/bidList/list"));
     }
 
@@ -123,7 +123,7 @@ class BidListControllerTest {
                 .andExpect(model().size(0))
 //                .andExpect(model().attributeExists("bidList"))
 //                .andExpect(model().attribute("bidList", bidList))
-                .andExpect(flash().attribute("success", Messages.SUCCESS_BID_UPDATED))
+                .andExpect(flash().attribute("success", Messages.SUCCESS_UPDATED.formatted("bid")))
                 .andExpect(view().name("redirect:/bidList/list"));
     }
 
@@ -144,7 +144,7 @@ class BidListControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/bidList/list"))
                 .andExpect(model().size(0))
-                .andExpect(flash().attribute("success", Messages.SUCCESS_BID_DELETED))
+                .andExpect(flash().attribute("success", Messages.SUCCESS_DELETED.formatted("bid")))
                 .andExpect(view().name("redirect:/bidList/list"));
     }
 }
