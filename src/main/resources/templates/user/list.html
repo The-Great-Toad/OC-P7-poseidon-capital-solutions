@@ -16,7 +16,11 @@
 			<a href="/">Home</a>&nbsp;|&nbsp;<a href="/login">Login</a>
 		</div>
 	</div>
+
 	<div class="row"><h2>User List</h2></div>
+
+	<div th:replace="~{/fragments/alerts}"></div>
+
 	<div class="row">
 		<a href="/user/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
