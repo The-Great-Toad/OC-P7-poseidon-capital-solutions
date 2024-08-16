@@ -9,4 +9,7 @@ public class Messages {
 
     /* FAILURE */
     public static final String FAILURE_DELETE = "Failed to remove %s from your list. Please retry later or contact us if the problem persist";
+
+    /* CONNEXION */
+    public static final String SUCCESS_LOGOUT = "You have been logged out";
 }

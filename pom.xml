@@ -129,6 +129,15 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-surefire-report</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<!--      Jacoco      -->
@@ -143,14 +152,10 @@
 				</configuration>
 				<executions>
 					<execution>
+						<id>jacoco-report</id>
+						<phase>verify</phase>
 						<goals>
 							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>jacoco-report</id>
-						<phase>test</phase>
-						<goals>
 							<goal>report</goal>
 						</goals>
 					</execution>
