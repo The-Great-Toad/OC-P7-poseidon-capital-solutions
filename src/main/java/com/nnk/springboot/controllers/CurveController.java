@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -35,7 +32,7 @@ public class CurveController {
     }
 
     @GetMapping("/curvePoint/add")
-    public String addBidForm(CurvePoint curvePoint) {
+    public String showAddForm(CurvePoint curvePoint) {
         return "curvePoint/add";
     }
 
@@ -64,7 +61,7 @@ public class CurveController {
     }
 
     @PostMapping("/curvePoint/update/{id}")
-    public String updateBid(
+    public String updateCurve(
             @PathVariable("id") Integer id,
             Model model,
             @Valid CurvePoint curvePoint,
@@ -82,8 +79,8 @@ public class CurveController {
         return "redirect:/curvePoint/list";
     }
 
-    @GetMapping("/curvePoint/delete/{id}")
-    public String deleteBid(
+    @DeleteMapping("/curvePoint/delete/{id}")
+    public String deleteCurve(
             @PathVariable("id") Integer id,
             Model model,
             RedirectAttributes redirectAttributes)
