@@ -1,6 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.constantes.Messages;
+import com.nnk.springboot.constants.Messages;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.services.curvePoint.CurvePointService;
 import jakarta.validation.Valid;

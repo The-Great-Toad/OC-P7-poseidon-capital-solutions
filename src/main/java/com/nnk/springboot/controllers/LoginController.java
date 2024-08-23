@@ -1,6 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.constantes.Messages;
+import com.nnk.springboot.constants.Messages;
 import com.nnk.springboot.services.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

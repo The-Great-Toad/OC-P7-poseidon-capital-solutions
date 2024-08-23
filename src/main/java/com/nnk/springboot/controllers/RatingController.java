@@ -1,6 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.constantes.Messages;
+import com.nnk.springboot.constants.Messages;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.services.rating.RatingService;
 import jakarta.validation.Valid;

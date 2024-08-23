@@ -1,7 +1,7 @@
 package com.nnk.springboot.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nnk.springboot.constantes.Messages;
+import com.nnk.springboot.constants.Messages;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -10,21 +10,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithMockUser(roles = {"USER", "ADMIN"})
-//@WithUserDetails // For later use, when UserDetailsService is implemented
-//https://docs.spring.io/spring-security/site/docs/5.2.0.RELEASE/reference/html/test.html
-class BidListControllerTest {
+class BidListControllerTest extends AbstractController {
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,17 +41,23 @@ class BidListControllerTest {
 
     @Test
     void homeTest() throws Exception {
-        mockMvc.perform(get("/bidList/list"))
+        mockMvc.perform(get("/bidList/list")
+                        .with(user(user)))
 //                .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(model().size(1))
                 .andExpect(model().attributeExists("bidLists"))
-                .andExpect(view().name("bidList/list"));
+                .andExpect(view().name("bidList/list"))
+                .andExpect(content().string(containsString("Logged in user:")))
+                .andExpect(content().string(containsString("john@doe.com")))
+                .andExpect(content().string(containsString("Roles:")))
+                .andExpect(content().string(containsString("USER")));
     }
 
     @Test
     void addBidFormTest() throws Exception {
-        mockMvc.perform(get("/bidList/add"))
+        mockMvc.perform(get("/bidList/add")
+                    .with(user(user)))
 //                .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(model().size(1))
@@ -65,17 +67,17 @@ class BidListControllerTest {
 
     @Test
     void validateTest() throws Exception {
-        BidList newBidList = BidList.builder()
-                .account("account")
-                .type("type")
-                .bidQuantity(23.0)
-                .build();
-
-        // TODO: ask Mentor why can't we do post request with mocked user ?!!
+        String account = "account";
+        String type = "type";
+        double quantity = 23d;
 
         mockMvc.perform(post("/bidList/validate")
-                        .queryParam("bid", objectMapper.writeValueAsString(newBidList) ))
-                .andDo(print())
+                        .with(user(user))
+                        .with(csrf())
+                        .queryParam("account", account)
+                        .queryParam("type", type)
+                        .queryParam("bidQuantity", String.valueOf(quantity)))
+//                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/bidList/list"))
                 .andExpect(model().size(0))
@@ -94,7 +96,8 @@ class BidListControllerTest {
 
         bidList = bidListRepository.save(bidList);
 
-        mockMvc.perform(get("/bidList/update/" + bidList.getId().toString()))
+        mockMvc.perform(get("/bidList/update/" + bidList.getId().toString())
+                    .with(user(user)))
 //                .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(model().size(1))
@@ -113,16 +116,20 @@ class BidListControllerTest {
 
         bidList = bidListRepository.save(bidList);
 
-        // TODO: ask Mentor why can't we do post request with mocked user ?!!
+        String account = "account modified";
+        String type = "type modified";
+        double quantity = 24d;
 
         mockMvc.perform(post("/bidList/update/" + bidList.getId().toString())
-                        .queryParam("bidList", objectMapper.writeValueAsString(bidList)))
+                        .with(user(user))
+                        .with(csrf())
+                        .queryParam("account", account)
+                        .queryParam("type", type)
+                        .queryParam("bidQuantity", String.valueOf(quantity)))
 //                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/bidList/list"))
                 .andExpect(model().size(0))
-//                .andExpect(model().attributeExists("bidList"))
-//                .andExpect(model().attribute("bidList", bidList))
                 .andExpect(flash().attribute("success", Messages.SUCCESS_UPDATED.formatted("bid")))
                 .andExpect(view().name("redirect:/bidList/list"));
     }
@@ -137,9 +144,9 @@ class BidListControllerTest {
 
         bidList = bidListRepository.save(bidList);
 
-        // TODO: ask Mentor why can't we do delete request with mocked user ?!!
-
-        mockMvc.perform(delete("/bidList/delete/" + bidList.getId().toString()))
+        mockMvc.perform(delete("/bidList/delete/" + bidList.getId().toString())
+                        .with(user(user))
+                        .with(csrf()))
 //                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/bidList/list"))

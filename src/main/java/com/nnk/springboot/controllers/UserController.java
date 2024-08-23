@@ -1,6 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.constantes.Messages;
+import com.nnk.springboot.constants.Messages;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.services.user.UserService;
 import jakarta.validation.Valid;

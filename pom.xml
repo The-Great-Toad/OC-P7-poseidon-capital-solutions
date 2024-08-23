@@ -80,7 +80,7 @@
 		<dependency>
 			<groupId>org.jacoco</groupId>
 			<artifactId>jacoco-maven-plugin</artifactId>
-			<version>0.8.11</version>
+			<version>0.8.12</version>
 		</dependency>
 
 		<dependency>
@@ -132,7 +132,7 @@
 				<executions>
 					<execution>
 						<id>generate-surefire-report</id>
-						<phase>verify</phase>
+						<phase>test</phase>
 						<goals>
 							<goal>report</goal>
 						</goals>
@@ -147,15 +147,21 @@
 				<configuration>
 					<excludes>
 						<exclude>**/configuration/*</exclude>
+						<exclude>**/exception/*</exclude>
+						<exclude>**/constants/*</exclude>
 						<exclude>**/domain/*</exclude>
 					</excludes>
 				</configuration>
 				<executions>
 					<execution>
-						<id>jacoco-report</id>
-						<phase>verify</phase>
 						<goals>
 							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-report</id>
+						<phase>test</phase>
+						<goals>
 							<goal>report</goal>
 						</goals>
 					</execution>

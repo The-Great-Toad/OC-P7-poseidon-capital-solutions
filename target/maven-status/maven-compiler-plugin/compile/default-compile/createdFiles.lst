@@ -39,4 +39,4 @@ com\nnk\springboot\repositories\CurvePointRepository.class
 com\nnk\springboot\configuration\exception\GlobalExceptionAdvice.class
 com\nnk\springboot\domain\User$UserBuilder.class
 com\nnk\springboot\repositories\RuleNameRepository.class
-com\nnk\springboot\constantes\Messages.class
+com\nnk\springboot\constants\Messages.class
