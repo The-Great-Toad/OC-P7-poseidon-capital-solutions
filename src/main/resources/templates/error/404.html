@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-      <title>403</title>
+      <title>404</title>
     <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
@@ -12,9 +12,13 @@
         <!-- Nav -->
         <div th:replace="~{fragments/nav.html}"></div>
 
-        <h3 class="mt-5">Access Denied Exception</h3>
+        <h3 class="mt-5" style="text-align: center; position: relative; z-index: 1;">
+            404 - Page Not Found
+        </h3>
 
-        <p class="alert alert-danger mt-3">You are not authorized for the requested data.</p>
+        <div style="text-align: center; margin-top: -5rem;">
+            <img th:src="@{/img/404.jpg}" alt="logo error 404">
+        </div>
 
     </div>
 </body>

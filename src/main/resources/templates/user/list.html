@@ -5,32 +5,24 @@
 
 <head>
 	<meta charset="utf-8"/>
-	<title>Home</title>
+	<title>User List</title>
 	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
 </head>
 
 <body>
-	<div class="container mt-5">
+	<main class="container mt-5">
 
-		<div class="row">
-			<div class="col-6">
-				Logged in user: <b sec:authentication="name" class="user">logged user</b>,
-				Roles: <b sec:authentication="principal.authorities">[ADMIN, USER]</b>
-			</div>
-			<div class="col-6 text-right">
-				<a href="/">Home</a>
-				<span>|</span>
-				<form th:action="@{/app/logout}" method="post" style="display: inline-flex">
-					<button class="btn btn-link" style="padding: 0">Logout</button>
-				</form>
-			</div>
-		</div>
+		<!-- Nav -->
+		<nav th:replace="~{fragments/nav.html}"></nav>
 
-		<div class="row mt-3"><h2>User List</h2></div>
+		<!-- Page Title -->
+		<section class="row mt-3"><h2>User List</h2></section>
 
-		<div th:replace="~{/fragments/alerts}"></div>
+		<!-- Alerts -->
+		<section th:replace="~{/fragments/alerts}"></section>
 
-		<div class="row">
+		<!-- Content -->
+		<section class="row mt-3">
 			<a href="/user/add" class="btn btn-primary btn-sm">Add New</a>
 
 			<table class="table table-bordered">
@@ -56,7 +48,7 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
-	</div>
+		</section>
+	</main>
 </body>
 </html>

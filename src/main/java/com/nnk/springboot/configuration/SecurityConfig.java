@@ -22,7 +22,6 @@ public class SecurityConfig {
                         authorize -> authorize
                                 .requestMatchers("/user/**").hasRole("ADMIN")
                                 .requestMatchers("/login").permitAll()
-                                .requestMatchers("/css/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(Customizer.withDefaults())
