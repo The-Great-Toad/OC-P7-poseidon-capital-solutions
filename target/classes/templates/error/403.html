@@ -8,22 +8,14 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h3>Access Denied Exception</h3>
 
-        <div class="row mt-3">
-            <div class="col-6">
-                Logged in user: <b sec:authentication="name" class="user">logged user</b>,
-                Roles: <b sec:authentication="principal.authorities">[ADMIN, USER]</b>
-            </div>
-            <div class="col-6 text-right">
-                <a href="/">Home</a>&nbsp;|&nbsp;
-                <form th:action="@{/app/logout}" method="post"><button class="btn btn-link">Logout</button></form>
-            </div>
-        </div>
-<!--    <p class="error" th:text="${error}">Error</p>-->
+        <!-- Nav -->
+        <div th:replace="~{fragments/nav.html}"></div>
+
+        <h3 class="mt-5">Access Denied Exception</h3>
+
         <p class="alert alert-danger mt-3">You are not authorized for the requested data.</p>
+
     </div>
-
-
 </body>
 </html>   
