@@ -4,6 +4,8 @@ import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,5 +58,23 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
         LOGGER.info("{} - Deleted user: {}", LOG_ID, user);
         return true;
+    }
+
+    @Override
+    public User getUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findByUsername(username);
+
+        if (user.isPresent()) {
+            LOGGER.info("{} - User found with email: {}", LOG_ID, user.get().getUsername());
+            return user.get();
+        } else {
+            LOGGER.info("{} - User with email {} not found", LOG_ID, username);
+            return null;
+        }
+    }
+
+    @Override
+    public void logoutUser() {
+        SecurityContextHolder.getContext().setAuthentication(null);
     }
 }

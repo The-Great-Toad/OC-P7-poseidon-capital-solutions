@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:th="http://www.thymeleaf.org">
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
 <title>Home</title>
 <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
-<div class="container">
-	<div class="row">
-		<div class="col-6">
-			<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
-			<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
-			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
-			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
-			<a href="/ruleName/list">Rule</a>
-		</div>
-		<div class="col-6 text-right">
-			<form th:action="@{/app-logout}" method="POST">
-				<input type="submit" value="Logout"/>
-			</form>
-		</div>
-	</div>
+<main class="container mt-5">
 
-	<div class="row"><h2>Bid List</h2></div>
+	<!-- Nav -->
+	<nav th:replace="~{fragments/nav.html}"></nav>
 
-	<div th:replace="~{/fragments/alerts}"></div>
+	<!-- Page Title -->
+	<section class="row mt-3"><h2>Bid List</h2></section>
 
-	<div class="row">
+	<!-- Alerts -->
+	<section th:replace="~{/fragments/alerts}"></section>
+
+	<!-- Content -->
+	<section class="row mt-3">
 		<a href="/bidList/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
 			<thead>
@@ -52,7 +45,7 @@
 				</tr>
 			</tbody>
 		</table>
-	</div>
-</div>
+	</section>
+</main>
 </body>
 </html>

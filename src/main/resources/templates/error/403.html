@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-      <title>Spring Boot</title>
+      <title>403</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
-   <h3>Access Denied Exception</h3>
-   <div>
-	    Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
-	    <form th:action="@{/app-logout}" method="POST">
-	         <input type="submit" value="Logout"/>
-	    </form>
-   </div> 	 
-    <p class="error" th:text="${errorMsg}">Error</p>
+    <div class="container mt-5">
+
+        <!-- Nav -->
+        <div th:replace="~{fragments/nav.html}"></div>
+
+        <h3 class="mt-5">Access Denied Exception</h3>
+
+        <p class="alert alert-danger mt-3">You are not authorized for the requested data.</p>
+
+    </div>
 </body>
 </html>   

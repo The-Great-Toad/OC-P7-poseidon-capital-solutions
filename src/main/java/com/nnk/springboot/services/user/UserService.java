@@ -17,4 +17,8 @@ public interface UserService {
     User update(User user);
 
     boolean delete(User user);
+
+    User getUserByUsername(String username);
+
+    void logoutUser();
 }

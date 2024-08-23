@@ -1,52 +1,54 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:th="http://www.thymeleaf.org">
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.w3.org/1999/xhtml">
+
 <head>
-<meta charset="utf-8"/>
-<title>Home</title>
-<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+	<meta charset="utf-8"/>
+	<title>User List</title>
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
 </head>
+
 <body>
-<div class="container">
-	<div class="row">
-		<div class="col-6">
+	<main class="container mt-5">
 
-		</div>
-		<div class="col-6 text-right">
-			<a href="/">Home</a>&nbsp;|&nbsp;<a href="/login">Login</a>
-		</div>
-	</div>
+		<!-- Nav -->
+		<nav th:replace="~{fragments/nav.html}"></nav>
 
-	<div class="row"><h2>User List</h2></div>
+		<!-- Page Title -->
+		<section class="row mt-3"><h2>User List</h2></section>
 
-	<div th:replace="~{/fragments/alerts}"></div>
+		<!-- Alerts -->
+		<section th:replace="~{/fragments/alerts}"></section>
 
-	<div class="row">
-		<a href="/user/add" class="btn btn-primary btn-sm">Add New</a>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Full Name</th>
-					<th>User Name</th>
-					<th>Role</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="user : ${users}">
-					<td style="width: 10%" th:text="${user.id}"></td>
-					<td th:text="${user.fullname}"></td>
-					<td th:text="${user.username}"></td>
-					<td style="width: 25%" th:text="${user.role}"></td>
-					<td style="width: 15%" class="text-center">
-						<a th:href="@{/user/update/{id}(id=${user.id})}">Edit</a>&nbsp;|&nbsp;
-						<a th:href="@{/user/delete/{id}(id=${user.id})}">Delete</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
+		<!-- Content -->
+		<section class="row mt-3">
+			<a href="/user/add" class="btn btn-primary btn-sm">Add New</a>
+
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Full Name</th>
+						<th>User Name</th>
+						<th>Role</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${users}">
+						<td style="width: 10%" th:text="${user.id}"></td>
+						<td th:text="${user.fullname}"></td>
+						<td th:text="${user.username}"></td>
+						<td style="width: 25%" th:text="${user.role}"></td>
+						<td style="width: 15%" class="text-center">
+							<a th:href="@{/user/update/{id}(id=${user.id})}">Edit</a>&nbsp;|&nbsp;
+							<a th:href="@{/user/delete/{id}(id=${user.id})}">Delete</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+	</main>
 </body>
 </html>

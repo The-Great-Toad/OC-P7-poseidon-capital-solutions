@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+//@PreAuthorize("hasRole('ADMIN')")
 @Controller
+@RequestMapping("user")
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TradeController.class);
@@ -28,19 +30,19 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping("/user/list")
+    @RequestMapping("list")
     public String home(Model model)
     {
         model.addAttribute("users", userService.getUsers());
         return "user/list";
     }
 
-    @GetMapping("/user/add")
+    @GetMapping("add")
     public String addUser(User bid) {
         return "user/add";
     }
 
-    @PostMapping("/user/validate")
+    @PostMapping("validate")
     public String validate(
             Model model,
             @Valid User user,
@@ -64,7 +66,7 @@ public class UserController {
         return "redirect:/user/list";
     }
 
-    @GetMapping("/user/update/{id}")
+    @GetMapping("update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model)
     {
         User user = userService.getUser(id);
@@ -75,7 +77,7 @@ public class UserController {
         return "user/update";
     }
 
-    @PostMapping("/user/update/{id}")
+    @PostMapping("update/{id}")
     public String updateUser(
             @PathVariable("id") Integer id,
             Model model,
@@ -101,7 +103,7 @@ public class UserController {
         return "redirect:/user/list";
     }
 
-    @GetMapping("/user/delete/{id}")
+    @GetMapping("delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, Model model)
     {
         User user = userService.getUser(id);

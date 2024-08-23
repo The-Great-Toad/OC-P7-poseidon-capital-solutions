@@ -1,40 +1,44 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.nnk.springboot.constantes.Messages;
+import com.nnk.springboot.services.user.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("app")
 public class LoginController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+    private static final String LOG_ID = "[LoginController]";
 
-    @GetMapping("login")
-    public ModelAndView login() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("login");
-        return mav;
+    private final UserService userService;
+
+    public LoginController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("secure/article-details")
     public ModelAndView getAllUserArticles() {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("users", userRepository.findAll());
+        mav.addObject("users", userService.getUsers());
         mav.setViewName("user/list");
         return mav;
     }
 
-    @GetMapping("error")
-    public ModelAndView error() {
-        ModelAndView mav = new ModelAndView();
-        String errorMessage= "You are not authorized for the requested data.";
-        mav.addObject("errorMsg", errorMessage);
-        mav.setViewName("403");
-        return mav;
+    @PostMapping("logout")
+    public String logout(RedirectAttributes redirectAttributes, Authentication authentication)
+    {
+        LOGGER.info("{} - login out user: {}", LOG_ID, authentication.getName());
+        userService.logoutUser();
+        redirectAttributes.addFlashAttribute("logoutSuccess", Messages.SUCCESS_LOGOUT);
+        return "redirect:/login";
     }
 }
