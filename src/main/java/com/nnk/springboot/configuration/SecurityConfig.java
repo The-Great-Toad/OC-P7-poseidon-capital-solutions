@@ -22,6 +22,7 @@ public class SecurityConfig {
                         authorize -> authorize
                                 .requestMatchers("/user/**").hasRole("ADMIN")
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/app/secure/article-details").hasRole("ADMIN")
                                 .requestMatchers("/login").permitAll()
                                 .anyRequest().authenticated()
                 )
