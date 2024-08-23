@@ -10,10 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 //@PreAuthorize("hasRole('ADMIN')")
@@ -59,7 +56,7 @@ public class UserController {
         userService.save(user);
 
         redirectAttributes.addFlashAttribute(
-                "Success",
+                "success",
                 Messages.SUCCESS_ADDED
                         .formatted("User :" + user.getUsername() + ","));
 
@@ -96,19 +93,27 @@ public class UserController {
         userService.save(user);
 
         redirectAttributes.addFlashAttribute(
-                "Success",
+                "success",
                 Messages.SUCCESS_UPDATED
                         .formatted("User :" + user.getUsername() + ","));
 
         return "redirect:/user/list";
     }
 
-    @GetMapping("delete/{id}")
-    public String deleteUser(@PathVariable("id") Integer id, Model model)
+    @DeleteMapping("delete/{id}")
+    public String deleteUser(
+            @PathVariable("id") Integer id,
+            Model model,
+            RedirectAttributes redirectAttributes)
     {
         User user = userService.getUser(id);
 
         userService.delete(user);
+
+        redirectAttributes.addFlashAttribute(
+                "success",
+                Messages.SUCCESS_DELETED
+                        .formatted("User :" + user.getUsername() + ","));
 
         return "redirect:/user/list";
     }
