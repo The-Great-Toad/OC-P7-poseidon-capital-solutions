@@ -26,16 +26,16 @@ public class AbstractController {
                 .username("john@doe.com")
                 .fullname("John DOE")
                 .password(passwordEncoder.encode("password"))
-                .role("USER")
+                .role("ROLE_USER")
                 .build();
     }
 
     private User createTestAdmin() {
         return User.builder()
-                .username("admin@adim.com")
+                .username("admin@admin.com")
                 .fullname("Admin ADMIN")
                 .password(passwordEncoder.encode("password"))
-                .role("ADMIN")
+                .role("ROLE_ADMIN")
                 .build();
     }
 

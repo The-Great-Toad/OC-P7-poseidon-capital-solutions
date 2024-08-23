@@ -3,8 +3,6 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.constants.Messages;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,14 +25,6 @@ class CurveControllerTest extends AbstractController {
     @Autowired
     private CurvePointRepository curvePointRepository;
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     void homeTest() throws Exception {
         mockMvc.perform(get("/curvePoint/list")
@@ -47,7 +37,7 @@ class CurveControllerTest extends AbstractController {
                 .andExpect(content().string(containsString("Logged in user:")))
                 .andExpect(content().string(containsString("john@doe.com")))
                 .andExpect(content().string(containsString("Roles:")))
-                .andExpect(content().string(containsString("USER")));
+                .andExpect(content().string(containsString("ROLE_USER")));
     }
 
     @Test
