@@ -21,8 +21,6 @@ public class BidListServiceImpl implements BidListService {
         this.bidListRepository = bidListRepository;
     }
 
-    // todo: faire les test
-
     @Override
     public List<BidList> getBids() {
         List<BidList> bids = bidListRepository.findAll();
