@@ -9,10 +9,10 @@ import java.util.Optional;
 
 public class AbstractEntityService<T> implements EntityService<T> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEntityService.class);
-    private final String LOG_ID;
+    protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractEntityService.class);
+    protected final String LOG_ID;
 
-    private final JpaRepository<T, Integer> repository;
+    protected final JpaRepository<T, Integer> repository;
 
     public AbstractEntityService(String LOG_ID, JpaRepository<T, Integer> abstractEntityRepository) {
         this.LOG_ID = LOG_ID;

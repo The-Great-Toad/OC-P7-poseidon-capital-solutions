@@ -2,7 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.constants.Messages;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.services.user.UserService;
+import com.nnk.springboot.services.AbstractEntityService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,16 +21,16 @@ public class UserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TradeController.class);
     private static final String LOG_ID = "[TradeController]";
 
-    private final UserService userService;
+    private final AbstractEntityService<User> userService;
 
-    public UserController(UserService userService) {
+    public UserController(AbstractEntityService<User> userService) {
         this.userService = userService;
     }
 
     @RequestMapping("list")
     public String home(Model model)
     {
-        model.addAttribute("users", userService.getUsers());
+        model.addAttribute("users", userService.getEntities());
         return "user/list";
     }
 
@@ -58,7 +58,7 @@ public class UserController {
         redirectAttributes.addFlashAttribute(
                 "success",
                 Messages.SUCCESS_ADDED
-                        .formatted("User :" + user.getUsername() + ","));
+                        .formatted("User : " + user.getUsername() + ","));
 
         return "redirect:/user/list";
     }
@@ -66,7 +66,7 @@ public class UserController {
     @GetMapping("update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model)
     {
-        User user = userService.getUser(id);
+        User user = userService.getEntity(id);
 
         user.setPassword("");
         model.addAttribute("user", user);
@@ -95,25 +95,25 @@ public class UserController {
         redirectAttributes.addFlashAttribute(
                 "success",
                 Messages.SUCCESS_UPDATED
-                        .formatted("User :" + user.getUsername() + ","));
+                        .formatted("User : " + user.getUsername() + ","));
 
         return "redirect:/user/list";
     }
 
-    @DeleteMapping("delete/{id}")
+    @GetMapping("delete/{id}")
     public String deleteUser(
             @PathVariable("id") Integer id,
             Model model,
             RedirectAttributes redirectAttributes)
     {
-        User user = userService.getUser(id);
+        User user = userService.getEntity(id);
 
         userService.delete(user);
 
         redirectAttributes.addFlashAttribute(
                 "success",
                 Messages.SUCCESS_DELETED
-                        .formatted("User :" + user.getUsername() + ","));
+                        .formatted("User : " + user.getUsername() + ","));
 
         return "redirect:/user/list";
     }

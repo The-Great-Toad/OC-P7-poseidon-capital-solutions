@@ -1,7 +1,7 @@
 package com.nnk.springboot;
 
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.services.user.UserService;
+import com.nnk.springboot.services.AbstractEntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -15,10 +15,10 @@ public class Application implements CommandLineRunner {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 	private static final String LOG_ID = "[Application]";
 
-	private final UserService userService;
+	private final AbstractEntityService<User> userService;
 	private final PasswordEncoder passwordEncoder;
 
-	public Application(UserService userService, PasswordEncoder passwordEncoder) {
+	public Application(AbstractEntityService<User> userService, PasswordEncoder passwordEncoder) {
 		this.userService = userService;
 		this.passwordEncoder = passwordEncoder;
 	}

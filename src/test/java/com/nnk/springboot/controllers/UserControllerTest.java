@@ -2,7 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.constants.Messages;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.services.user.UserService;
+import com.nnk.springboot.services.AbstractEntityService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,7 +24,7 @@ class UserControllerTest extends AbstractController {
     private MockMvc mockMvc;
 
     @Autowired
-    private UserService userService;
+    private AbstractEntityService<User> userService;
 
     @Test
     void homeTest() throws Exception {
@@ -73,7 +73,7 @@ class UserControllerTest extends AbstractController {
                 .andExpect(flash().attributeExists("success"))
                 .andExpect(flash().attribute(
                         "success",
-                        Messages.SUCCESS_ADDED.formatted("User :" + username + ",")))
+                        Messages.SUCCESS_ADDED.formatted("User : " + username + ",")))
                 .andExpect(view().name("redirect:/user/list"));
     }
 
@@ -126,12 +126,12 @@ class UserControllerTest extends AbstractController {
                 .andExpect(model().size(0))
                 .andExpect(flash().attribute(
                         "success",
-                        Messages.SUCCESS_UPDATED.formatted("User :" + username + ",")))
+                        Messages.SUCCESS_UPDATED.formatted("User : " + username + ",")))
                 .andExpect(view().name("redirect:/user/list"));
     }
 
     @Test
-    void deleteRuleNameTest() throws Exception {
+    void deleteUserTest() throws Exception {
         User user = User.builder()
                 .username("username")
                 .password("password")
@@ -141,7 +141,7 @@ class UserControllerTest extends AbstractController {
 
         user = userService.save(user);
 
-        mockMvc.perform(delete("/user/delete/" + user.getId().toString())
+        mockMvc.perform(get("/user/delete/" + user.getId().toString())
                         .with(user(admin))
                         .with(csrf()))
 //                .andDo(print())
@@ -150,7 +150,7 @@ class UserControllerTest extends AbstractController {
                 .andExpect(model().size(0))
                 .andExpect(flash().attribute(
                         "success",
-                        Messages.SUCCESS_DELETED.formatted("User :" + user.getUsername() + ",")))
+                        Messages.SUCCESS_DELETED.formatted("User : " + user.getUsername() + ",")))
                 .andExpect(view().name("redirect:/user/list"));
     }
 }

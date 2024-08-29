@@ -1,7 +1,7 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.constants.Messages;
-import com.nnk.springboot.services.user.UserService;
+import com.nnk.springboot.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -28,7 +28,7 @@ public class LoginController {
     @GetMapping("secure/article-details")
     public ModelAndView getAllUserArticles() {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("users", userService.getUsers());
+        mav.addObject("users", userService.getEntities());
         mav.setViewName("user/list");
         return mav;
     }

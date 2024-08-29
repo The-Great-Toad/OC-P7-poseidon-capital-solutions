@@ -1,6 +1,6 @@
 package com.nnk.springboot.configuration;
 
-import com.nnk.springboot.services.user.UserService;
+import com.nnk.springboot.services.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;

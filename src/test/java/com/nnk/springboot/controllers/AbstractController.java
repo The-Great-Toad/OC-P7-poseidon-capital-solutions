@@ -1,7 +1,7 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.services.user.UserService;
+import com.nnk.springboot.services.AbstractEntityService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AbstractController {
 
     @Autowired
-    private UserService userService;
+    private AbstractEntityService<User> userService;
 
     public PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
