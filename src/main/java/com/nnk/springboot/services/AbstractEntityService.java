@@ -22,7 +22,7 @@ public class AbstractEntityService<T> implements EntityService<T> {
     @Override
     public List<T> getEntities() {
         List<T> entities = repository.findAll();
-        LOGGER.info("{} - Retrieved {} entity(ies)", LOG_ID, entities.size());
+        LOGGER.info("{} - Retrieved {} {}", LOG_ID, entities.size(), entities.size() <= 1 ? "entity" : "entities");
 
         return entities;
     }

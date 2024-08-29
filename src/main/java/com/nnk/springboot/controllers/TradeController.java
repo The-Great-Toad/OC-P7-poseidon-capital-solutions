@@ -2,7 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.constants.Messages;
 import com.nnk.springboot.domain.Trade;
-import com.nnk.springboot.services.trade.TradeService;
+import com.nnk.springboot.services.AbstractEntityService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,16 +18,16 @@ public class TradeController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TradeController.class);
     private static final String LOG_ID = "[TradeController]";
 
-    private final TradeService tradeService;
+    private final AbstractEntityService<Trade> tradeService;
 
-    public TradeController(TradeService tradeService) {
+    public TradeController(AbstractEntityService<Trade> tradeService) {
         this.tradeService = tradeService;
     }
 
     @RequestMapping("/trade/list")
     public String home(Model model)
     {
-        model.addAttribute("trades", tradeService.getTrades());
+        model.addAttribute("trades", tradeService.getEntities());
         return "trade/list";
     }
 
@@ -56,7 +56,7 @@ public class TradeController {
 
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("trade", tradeService.getTrade(id));
+        model.addAttribute("trade", tradeService.getEntity(id));
         return "trade/update";
     }
 
@@ -79,13 +79,13 @@ public class TradeController {
         return "redirect:/trade/list";
     }
 
-    @DeleteMapping("/trade/delete/{id}")
+    @GetMapping("/trade/delete/{id}")
     public String deleteTrade(
             @PathVariable("id") Integer id,
             Model model,
             RedirectAttributes redirectAttributes)
     {
-        Trade trade = tradeService.getTrade(id);
+        Trade trade = tradeService.getEntity(id);
 
         if (trade != null) {
             tradeService.delete(trade);

@@ -116,7 +116,7 @@ class TradeControllerTest extends AbstractController {
 
         trade = tradeRepository.save(trade);
 
-        mockMvc.perform(delete("/trade/delete/" + trade.getId().toString())
+        mockMvc.perform(get("/trade/delete/" + trade.getId().toString())
                         .with(user(user))
                         .with(csrf()))
 //                .andDo(print())
