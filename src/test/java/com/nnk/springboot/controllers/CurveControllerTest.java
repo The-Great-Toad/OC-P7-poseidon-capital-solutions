@@ -130,7 +130,7 @@ class CurveControllerTest extends AbstractController {
 
         curvePoint = curvePointRepository.save(curvePoint);
 
-        mockMvc.perform(delete("/curvePoint/delete/" + curvePoint.getId().toString())
+        mockMvc.perform(get("/curvePoint/delete/" + curvePoint.getId().toString())
                         .with(user(user))
                         .with(csrf()))
 //                .andDo(print())
