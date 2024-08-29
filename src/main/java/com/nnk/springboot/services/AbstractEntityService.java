@@ -22,7 +22,7 @@ public class AbstractEntityService<T> implements EntityService<T> {
     @Override
     public List<T> getEntities() {
         List<T> entities = repository.findAll();
-        LOGGER.info("{} - Retrieved {} bid(s)", LOG_ID, entities.size());
+        LOGGER.info("{} - Retrieved {} entity(ies)", LOG_ID, entities.size());
 
         return entities;
     }
@@ -32,11 +32,11 @@ public class AbstractEntityService<T> implements EntityService<T> {
         Optional<T> entity = repository.findById(id);
 
         if (entity.isPresent()) {
-            LOGGER.info("{} - Retrieved bid: {}", LOG_ID, entity.get());
+            LOGGER.info("{} - Retrieved entity: {}", LOG_ID, entity.get());
             return entity.get();
         }
 
-        LOGGER.error("{} - No such bid: {}", LOG_ID, id);
+        LOGGER.error("{} - No such entity with ID: {}", LOG_ID, id);
         return null;
     }
 

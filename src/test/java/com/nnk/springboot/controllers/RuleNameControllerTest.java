@@ -117,7 +117,7 @@ class RuleNameControllerTest extends AbstractController {
 
         ruleName = ruleNameRepository.save(ruleName);
 
-        mockMvc.perform(delete("/ruleName/delete/" + ruleName.getId().toString())
+        mockMvc.perform(get("/ruleName/delete/" + ruleName.getId().toString())
                         .with(user(user))
                         .with(csrf()))
 //                .andDo(print())

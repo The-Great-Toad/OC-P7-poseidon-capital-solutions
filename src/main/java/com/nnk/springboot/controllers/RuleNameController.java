@@ -2,7 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.constants.Messages;
 import com.nnk.springboot.domain.RuleName;
-import com.nnk.springboot.services.ruleName.RuleNameService;
+import com.nnk.springboot.services.AbstractEntityService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,16 +18,16 @@ public class RuleNameController {
     private static final Logger LOGGER = LoggerFactory.getLogger(RuleNameController.class);
     private static final String LOG_ID = "[RuleNameController]";
 
-    private final RuleNameService ruleNameService;
+    private final AbstractEntityService<RuleName> ruleNameService;
 
-    public RuleNameController(RuleNameService ruleNameService) {
+    public RuleNameController(AbstractEntityService<RuleName> ruleNameService) {
         this.ruleNameService = ruleNameService;
     }
 
     @RequestMapping("/ruleName/list")
     public String home(Model model)
     {
-        model.addAttribute("ruleNames", ruleNameService.getRuleNames());
+        model.addAttribute("ruleNames", ruleNameService.getEntities());
         return "ruleName/list";
     }
 
@@ -56,7 +56,7 @@ public class RuleNameController {
 
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("ruleName", ruleNameService.getRuleName(id));
+        model.addAttribute("ruleName", ruleNameService.getEntity(id));
         return "ruleName/update";
     }
 
@@ -79,13 +79,13 @@ public class RuleNameController {
         return "redirect:/ruleName/list";
     }
 
-    @DeleteMapping("/ruleName/delete/{id}")
+    @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(
             @PathVariable("id") Integer id,
             Model model,
             RedirectAttributes redirectAttributes)
     {
-        RuleName ruleName = ruleNameService.getRuleName(id);
+        RuleName ruleName = ruleNameService.getEntity(id);
 
         if (ruleName != null) {
             ruleNameService.delete(ruleName);
