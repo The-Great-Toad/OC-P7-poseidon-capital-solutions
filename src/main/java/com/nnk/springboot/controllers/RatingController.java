@@ -2,7 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.constants.Messages;
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.services.rating.RatingService;
+import com.nnk.springboot.services.AbstractEntityService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,16 +18,16 @@ public class RatingController {
     private static final Logger LOGGER = LoggerFactory.getLogger(RatingController.class);
     private static final String LOG_ID = "[RatingController]";
 
-    private final RatingService ratingService;
+    private final AbstractEntityService<Rating> ratingService;
 
-    public RatingController(RatingService ratingService) {
+    public RatingController(AbstractEntityService<Rating> ratingService) {
         this.ratingService = ratingService;
     }
 
     @RequestMapping("/rating/list")
     public String home(Model model)
     {
-        model.addAttribute("ratings", ratingService.getRatings());
+        model.addAttribute("ratings", ratingService.getEntities());
         return "rating/list";
     }
 
@@ -56,7 +56,7 @@ public class RatingController {
 
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("rating", ratingService.getRating(id));
+        model.addAttribute("rating", ratingService.getEntity(id));
         return "rating/update";
     }
 
@@ -79,13 +79,13 @@ public class RatingController {
         return "redirect:/rating/list";
     }
 
-    @DeleteMapping("/rating/delete/{id}")
+    @GetMapping("/rating/delete/{id}")
     public String deleteRating(
             @PathVariable("id") Integer id,
             Model model,
             RedirectAttributes redirectAttributes)
     {
-        Rating rating = ratingService.getRating(id);
+        Rating rating = ratingService.getEntity(id);
 
         if (rating != null) {
             ratingService.delete(rating);

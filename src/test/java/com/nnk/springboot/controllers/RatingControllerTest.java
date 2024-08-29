@@ -116,7 +116,7 @@ class RatingControllerTest extends AbstractController {
 
         rating = ratingRepository.save(rating);
 
-        mockMvc.perform(delete("/rating/delete/" + rating.getId().toString())
+        mockMvc.perform(get("/rating/delete/" + rating.getId().toString())
                         .with(user(user))
                         .with(csrf()))
 //                .andDo(print())
