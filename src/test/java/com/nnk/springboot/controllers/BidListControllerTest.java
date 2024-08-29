@@ -73,6 +73,26 @@ class BidListControllerTest extends AbstractController {
     }
 
     @Test
+    void validateTest_BindingResultErrors() throws Exception {
+        String account = null;
+        String type = null;
+        double quantity = -1d;
+
+        mockMvc.perform(post("/bidList/validate")
+                        .with(user(user))
+                        .with(csrf())
+                        .queryParam("account", account)
+                        .queryParam("type", type)
+                        .queryParam("bidQuantity", String.valueOf(quantity)))
+//                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(model().size(1))
+                .andExpect(model().attributeExists("bidList"))
+                .andExpect(model().attributeHasFieldErrors("bidList", "account", "type"))
+                .andExpect(view().name("bidList/add"));
+    }
+
+    @Test
     void showUpdateFormTest() throws Exception {
         BidList bidList = BidList.builder()
                 .account("account")
@@ -121,6 +141,34 @@ class BidListControllerTest extends AbstractController {
     }
 
     @Test
+    void updateBidTest_BindingResultErrors() throws Exception {
+        BidList bidList = BidList.builder()
+                .account("account")
+                .type("type")
+                .bidQuantity(23.0)
+                .build();
+
+        bidList = bidListRepository.save(bidList);
+
+        String account = null;
+        String type = null;
+        double quantity = 24d;
+
+        mockMvc.perform(post("/bidList/update/" + bidList.getId().toString())
+                        .with(user(user))
+                        .with(csrf())
+                        .queryParam("account", account)
+                        .queryParam("type", type)
+                        .queryParam("bidQuantity", String.valueOf(quantity)))
+//                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(model().size(1))
+                .andExpect(model().attributeExists("bidList"))
+                .andExpect(model().attributeHasFieldErrors("bidList", "account", "type"))
+                .andExpect(view().name("bidList/update"));
+    }
+
+    @Test
     void deleteBidTest() throws Exception {
         BidList bidList = BidList.builder()
                 .account("account")
@@ -138,6 +186,19 @@ class BidListControllerTest extends AbstractController {
                 .andExpect(redirectedUrl("/bidList/list"))
                 .andExpect(model().size(0))
                 .andExpect(flash().attribute("success", Messages.SUCCESS_DELETED.formatted("bid")))
+                .andExpect(view().name("redirect:/bidList/list"));
+    }
+
+    @Test
+    void deleteBidTest_NoSuchElement() throws Exception {
+        mockMvc.perform(get("/bidList/delete/" + "99")
+                        .with(user(user))
+                        .with(csrf()))
+//                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/bidList/list"))
+                .andExpect(model().size(0))
+                .andExpect(flash().attribute("failure", Messages.FAILURE_DELETE.formatted("bid")))
                 .andExpect(view().name("redirect:/bidList/list"));
     }
 }

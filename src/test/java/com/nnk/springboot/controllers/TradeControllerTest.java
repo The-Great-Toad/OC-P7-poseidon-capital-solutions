@@ -126,4 +126,17 @@ class TradeControllerTest extends AbstractController {
                 .andExpect(flash().attribute("success", Messages.SUCCESS_DELETED.formatted("trade")))
                 .andExpect(view().name("redirect:/trade/list"));
     }
+
+    @Test
+    void deleteRuleNameTest_NoSuchElement() throws Exception {
+        mockMvc.perform(get("/trade/delete/" + "99")
+                        .with(user(user))
+                        .with(csrf()))
+//                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/trade/list"))
+                .andExpect(model().size(0))
+                .andExpect(flash().attribute("failure", Messages.FAILURE_DELETE.formatted("trade")))
+                .andExpect(view().name("redirect:/trade/list"));
+    }
 }

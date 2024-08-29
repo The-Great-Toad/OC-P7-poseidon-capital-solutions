@@ -78,6 +78,30 @@ class UserControllerTest extends AbstractController {
     }
 
     @Test
+    void validateTest_BindingResultErrors() throws Exception {
+        String username = null;
+        String password = null;
+        String fullname = null;
+        String role = null;
+
+        mockMvc.perform(post("/user/validate")
+                        .with(user(admin))
+                        .with(csrf())
+                        .queryParam("username", username)
+                        .queryParam("password", password)
+                        .queryParam("fullname", fullname)
+                        .queryParam("role", role))
+//                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(model().size(1))
+                .andExpect(model().attributeExists("user"))
+                .andExpect(model().attributeHasFieldErrors(
+                        "user",
+                        "username", "password", "fullname", "role"))
+                .andExpect(view().name("user/add"));
+    }
+
+    @Test
     void showUpdateFormTest() throws Exception {
         User user = User.builder()
                 .username("username")
@@ -131,6 +155,39 @@ class UserControllerTest extends AbstractController {
     }
 
     @Test
+    void updateUserTest_BindingResultErrors() throws Exception {
+        User userTest = User.builder()
+                .username("username")
+                .password("password")
+                .fullname("fullname")
+                .role("USER")
+                .build();
+
+        userTest = userService.save(userTest);
+
+        String username = null;
+        String password = null;
+        String fullname = null;
+        String role = null;
+
+        mockMvc.perform(post("/user/update/" + userTest.getId().toString())
+                        .with(user(admin))
+                        .with(csrf())
+                        .queryParam("username", username)
+                        .queryParam("password", password)
+                        .queryParam("fullname", fullname)
+                        .queryParam("role", role))
+//                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(model().size(1))
+                .andExpect(model().attributeExists("user"))
+                .andExpect(model().attributeHasFieldErrors(
+                        "user",
+                        "username", "password", "fullname", "role"))
+                .andExpect(view().name("user/update"));
+    }
+
+    @Test
     void deleteUserTest() throws Exception {
         User user = User.builder()
                 .username("username")
@@ -151,6 +208,23 @@ class UserControllerTest extends AbstractController {
                 .andExpect(flash().attribute(
                         "success",
                         Messages.SUCCESS_DELETED.formatted("User : " + user.getUsername() + ",")))
+                .andExpect(view().name("redirect:/user/list"));
+    }
+
+    @Test
+    void deleteUserTest_NoSuchElement() throws Exception {
+        int id = 99;
+
+        mockMvc.perform(get("/user/delete/" + id)
+                        .with(user(admin))
+                        .with(csrf()))
+//                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/user/list"))
+                .andExpect(model().size(0))
+                .andExpect(flash().attribute(
+                        "failure",
+                        Messages.FAILURE_DELETE.formatted("User with ID: " + id + ",")))
                 .andExpect(view().name("redirect:/user/list"));
     }
 }

@@ -126,4 +126,17 @@ class RatingControllerTest extends AbstractController {
                 .andExpect(flash().attribute("success", Messages.SUCCESS_DELETED.formatted("rating")))
                 .andExpect(view().name("redirect:/rating/list"));
     }
+
+    @Test
+    void deleteRatingTest_NoSuchElement() throws Exception {
+        mockMvc.perform(get("/rating/delete/" + "99")
+                        .with(user(user))
+                        .with(csrf()))
+//                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/rating/list"))
+                .andExpect(model().size(0))
+                .andExpect(flash().attribute("failure", Messages.FAILURE_DELETE.formatted("rating")))
+                .andExpect(view().name("redirect:/rating/list"));
+    }
 }

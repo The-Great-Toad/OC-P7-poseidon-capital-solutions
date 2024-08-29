@@ -127,4 +127,17 @@ class RuleNameControllerTest extends AbstractController {
                 .andExpect(flash().attribute("success", Messages.SUCCESS_DELETED.formatted("rule")))
                 .andExpect(view().name("redirect:/ruleName/list"));
     }
+
+    @Test
+    void deleteRuleNameTest_NoSuchElement() throws Exception {
+        mockMvc.perform(get("/ruleName/delete/" + "99")
+                        .with(user(user))
+                        .with(csrf()))
+//                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/ruleName/list"))
+                .andExpect(model().size(0))
+                .andExpect(flash().attribute("failure", Messages.FAILURE_DELETE.formatted("rule")))
+                .andExpect(view().name("redirect:/ruleName/list"));
+    }
 }

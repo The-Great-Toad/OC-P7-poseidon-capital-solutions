@@ -47,6 +47,7 @@ public class UserController {
             RedirectAttributes redirectAttributes)
     {
         if (result.hasErrors()) {
+            result.getAllErrors().forEach(error -> LOGGER.error("{} - {}", LOG_ID, error));
             return "user/add";
         }
 
@@ -83,6 +84,7 @@ public class UserController {
             RedirectAttributes redirectAttributes)
     {
         if (result.hasErrors()) {
+            result.getAllErrors().forEach(error -> LOGGER.error("{} - {}", LOG_ID, error));
             return "user/update";
         }
 
@@ -108,12 +110,20 @@ public class UserController {
     {
         User user = userService.getEntity(id);
 
-        userService.delete(user);
-
-        redirectAttributes.addFlashAttribute(
-                "success",
-                Messages.SUCCESS_DELETED
-                        .formatted("User : " + user.getUsername() + ","));
+        if (user != null) {
+            userService.delete(user);
+            LOGGER.info("Deleted user: {}", user);
+            redirectAttributes.addFlashAttribute(
+                    "success",
+                    Messages.SUCCESS_DELETED
+                            .formatted("User : " + user.getUsername() + ","));
+        } else {
+            LOGGER.info("No user found with id: {}", id);
+            redirectAttributes.addFlashAttribute(
+                    "failure",
+                    Messages.FAILURE_DELETE
+                            .formatted("User with ID: " + id + ","));
+        }
 
         return "redirect:/user/list";
     }

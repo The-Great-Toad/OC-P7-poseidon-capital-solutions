@@ -73,6 +73,26 @@ class CurveControllerTest extends AbstractController {
     }
 
     @Test
+    void validateTest_BindingResultErrors() throws Exception {
+        Integer curveId = null;
+        Double term = 2d;
+        Double value = 23d;
+
+        mockMvc.perform(post("/curvePoint/validate")
+                        .with(user(user))
+                        .with(csrf())
+                        .queryParam("curveId", String.valueOf(curveId))
+                        .queryParam("term", String.valueOf(term))
+                        .queryParam("value", String.valueOf(value)))
+//                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(model().size(1))
+                .andExpect(model().attributeExists("curvePoint"))
+                .andExpect(model().attributeHasFieldErrors("curvePoint", "curveId"))
+                .andExpect(view().name("curvePoint/add"));
+    }
+
+    @Test
     void showUpdateFormTest() throws Exception {
         CurvePoint curvePoint = CurvePoint.builder()
                 .curveId(1)
@@ -121,6 +141,34 @@ class CurveControllerTest extends AbstractController {
     }
 
     @Test
+    void updateCurveTest_BindingResultErrors() throws Exception {
+        CurvePoint curvePoint = CurvePoint.builder()
+                .curveId(1)
+                .term(2d)
+                .value(3d)
+                .build();
+
+        curvePoint = curvePointRepository.save(curvePoint);
+
+        Integer curveId = null;
+        Double term = 2d;
+        Double value = 23d;
+
+        mockMvc.perform(post("/curvePoint/update/" + curvePoint.getId().toString())
+                        .with(user(user))
+                        .with(csrf())
+                        .queryParam("curveId", String.valueOf(curveId))
+                        .queryParam("term", String.valueOf(term))
+                        .queryParam("value", String.valueOf(value)))
+//                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(model().size(1))
+                .andExpect(model().attributeExists("curvePoint"))
+                .andExpect(model().attributeHasFieldErrors("curvePoint", "curveId"))
+                .andExpect(view().name("curvePoint/update"));
+    }
+
+    @Test
     void deleteCurveTest() throws Exception {
         CurvePoint curvePoint = CurvePoint.builder()
                 .curveId(1)
@@ -138,6 +186,19 @@ class CurveControllerTest extends AbstractController {
                 .andExpect(redirectedUrl("/curvePoint/list"))
                 .andExpect(model().size(0))
                 .andExpect(flash().attribute("success", Messages.SUCCESS_DELETED.formatted("curve point")))
+                .andExpect(view().name("redirect:/curvePoint/list"));
+    }
+
+    @Test
+    void deleteCurveTest_NoSuchElement() throws Exception {
+        mockMvc.perform(get("/curvePoint/delete/" + "99")
+                        .with(user(user))
+                        .with(csrf()))
+//                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/curvePoint/list"))
+                .andExpect(model().size(0))
+                .andExpect(flash().attribute("failure", Messages.FAILURE_DELETE.formatted("curve point")))
                 .andExpect(view().name("redirect:/curvePoint/list"));
     }
 }
