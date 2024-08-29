@@ -130,7 +130,7 @@ class BidListControllerTest extends AbstractController {
 
         bidList = bidListRepository.save(bidList);
 
-        mockMvc.perform(delete("/bidList/delete/" + bidList.getId().toString())
+        mockMvc.perform(get("/bidList/delete/" + bidList.getId().toString())
                         .with(user(user))
                         .with(csrf()))
 //                .andDo(print())

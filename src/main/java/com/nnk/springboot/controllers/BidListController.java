@@ -2,7 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.constants.Messages;
 import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.services.bidList.BidListService;
+import com.nnk.springboot.services.EntityService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,30 +15,32 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.sql.SQLException;
 
 @Controller
-public class BidListController {
+public class BidListController implements ControllerInterface<BidList> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BidListController.class);
     private static final String LOG_ID = "[BidListController]";
 
-    private final BidListService bidListService;
+    private final EntityService<BidList> bidListService;
 
-    public BidListController(BidListService bidListService) {
+    public BidListController(EntityService<BidList> bidListService) {
         this.bidListService = bidListService;
     }
 
+    @Override
     @RequestMapping("/bidList/list")
     public String home(Model model)
     {
-        model.addAttribute("bidLists", bidListService.getBids());
+        model.addAttribute("bidLists", bidListService.getEntities());
         return "bidList/list";
     }
 
+    @Override
     @GetMapping("/bidList/add")
-    public String addBidForm(BidList bid) throws SQLException {
-//        throw new SQLException("Connection time out"); // for test
+    public String addEntityForm(BidList bid) {
         return "bidList/add";
     }
 
+    @Override
     @PostMapping("/bidList/validate")
     public String validate(
             Model model,
@@ -57,14 +59,16 @@ public class BidListController {
         return "redirect:/bidList/list";
     }
 
+    @Override
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("bidList", bidListService.getBid(id));
+        model.addAttribute("bidList", bidListService.getEntity(id));
         return "bidList/update";
     }
 
+    @Override
     @PostMapping("/bidList/update/{id}")
-    public String updateBid(
+    public String updateEntity(
             @PathVariable("id") Integer id,
             @Valid BidList bidList,
             BindingResult result,
@@ -82,13 +86,14 @@ public class BidListController {
         return "redirect:/bidList/list";
     }
 
-    @DeleteMapping("/bidList/delete/{id}")
-    public String deleteBid(
+    @Override
+    @GetMapping("/bidList/delete/{id}")
+    public String deleteEntity(
             @PathVariable("id") Integer id,
             Model model,
             RedirectAttributes redirectAttributes)
     {
-        BidList bid = bidListService.getBid(id);
+        BidList bid = bidListService.getEntity(id);
 
         if (bid != null) {
             bidListService.delete(bid);

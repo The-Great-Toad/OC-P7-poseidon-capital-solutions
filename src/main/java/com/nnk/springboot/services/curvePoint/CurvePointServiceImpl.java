@@ -2,7 +2,7 @@ package com.nnk.springboot.services.curvePoint;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
-import com.nnk.springboot.services.bidList.BidListServiceImpl;
+import com.nnk.springboot.services.BidListService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class CurvePointServiceImpl implements CurvePointService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BidListServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BidListService.class);
     private static final String LOG_ID = "[BidListService]";
 
     private final CurvePointRepository curvePointRepository;

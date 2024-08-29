@@ -3,6 +3,7 @@ C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\mai
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\configuration\SecurityConfig.java
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\constants\Messages.java
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\controllers\BidListController.java
+C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\controllers\ControllerInterface.java
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\controllers\CurveController.java
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\controllers\HomeController.java
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\controllers\LoginController.java
@@ -22,10 +23,11 @@ C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\mai
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\repositories\RuleNameRepository.java
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\repositories\TradeRepository.java
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\repositories\UserRepository.java
-C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\services\bidList\BidListService.java
-C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\services\bidList\BidListServiceImpl.java
+C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\services\AbstractEntityService.java
+C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\services\BidListService.java
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\services\curvePoint\CurvePointService.java
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\services\curvePoint\CurvePointServiceImpl.java
+C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\services\EntityService.java
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\services\rating\RatingService.java
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\services\rating\RatingServiceImpl.java
 C:\Users\ningo\IdeaProjects\OC-projects\OC-P7-poseidon-capital-solutions\src\main\java\com\nnk\springboot\services\ruleName\RuleNameService.java
