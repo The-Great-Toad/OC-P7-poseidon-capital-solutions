@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CurvePointService extends AbstractEntityService<CurvePoint> {
 
-    public CurvePointService(JpaRepository<CurvePoint, Integer> abstractEntityRepository) {
-        super("CurvePointService", abstractEntityRepository);
+    public CurvePointService(JpaRepository<CurvePoint, Integer> repository) {
+        super("CurvePointService", repository);
     }
 }

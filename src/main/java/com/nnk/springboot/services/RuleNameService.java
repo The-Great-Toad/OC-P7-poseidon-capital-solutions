@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class RuleNameService extends AbstractEntityService<RuleName> {
 
 
-    public RuleNameService(JpaRepository<RuleName, Integer> abstractEntityRepository) {
-        super("RuleNameService", abstractEntityRepository);
+    public RuleNameService(JpaRepository<RuleName, Integer> repository) {
+        super("RuleNameService", repository);
     }
 }

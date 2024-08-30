@@ -12,9 +12,8 @@ import java.util.Optional;
 @Service
 public class UserService extends AbstractEntityService<User> {
 
-
-    public UserService(JpaRepository<User, Integer> abstractEntityRepository) {
-        super("UserService", abstractEntityRepository);
+    public UserService(JpaRepository<User, Integer> repository) {
+        super("UserService", repository);
     }
 
     public User getUserByUsername(String username) {

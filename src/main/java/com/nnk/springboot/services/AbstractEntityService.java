@@ -14,9 +14,9 @@ public class AbstractEntityService<T> implements EntityService<T> {
 
     protected final JpaRepository<T, Integer> repository;
 
-    public AbstractEntityService(String LOG_ID, JpaRepository<T, Integer> abstractEntityRepository) {
+    public AbstractEntityService(String LOG_ID, JpaRepository<T, Integer> repository) {
         this.LOG_ID = LOG_ID;
-        this.repository = abstractEntityRepository;
+        this.repository = repository;
     }
 
     @Override

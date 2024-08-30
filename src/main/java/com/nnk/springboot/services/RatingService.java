@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class RatingService extends AbstractEntityService<Rating> {
 
 
-    public RatingService(JpaRepository<Rating, Integer> abstractEntityRepository) {
-        super("RatingService", abstractEntityRepository);
+    public RatingService(JpaRepository<Rating, Integer> repository) {
+        super("RatingService", repository);
     }
 }

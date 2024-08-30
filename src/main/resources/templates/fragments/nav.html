@@ -1,7 +1,9 @@
 <nav class="row">
     <!-- Navigation -->
-    <div class="col-6">
-        <a href="/user/list" sec:authorize="hasRole('ROLE_ADMIN')">User management</a> |
+    <div class="col-6" style="padding: 0 !important;">
+        <div sec:authorize="hasRole('ROLE_ADMIN')" style="display: inline-block">
+            <a href="/user/list">User management</a> |
+        </div>
         <a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
         <a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
         <a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
@@ -10,7 +12,7 @@
     </div>
 
     <!-- User Info -->
-    <div class="col-6 text-right">
+    <div class="col-6 text-right" style="padding: 0 !important;">
         <div style="display: inline-block; margin-right: 1rem">
             Logged in user: <b sec:authentication="name" class="user">logged user</b>,
             Roles: <b sec:authentication="principal.authorities[0]">[ADMIN, USER]</b>

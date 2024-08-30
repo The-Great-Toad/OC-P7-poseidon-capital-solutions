@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TradeService extends AbstractEntityService<Trade> {
 
-    public TradeService(JpaRepository<Trade, Integer> abstractEntityRepository) {
-        super("TradeService", abstractEntityRepository);
+    public TradeService(JpaRepository<Trade, Integer> repository) {
+        super("TradeService", repository);
     }
 }
